@@ -1,8 +1,20 @@
+const mongoose = require('mongoose')
 const express = require('express')
 const path = require('path')
+const morgan = require('morgan')
 const OpenApiValidator = require('express-openapi-validator')
+const errors = require('./errors')
+
+require('dotenv').config()
+
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+  .catch(e => {
+    console.error('Coundn\'t connect to mongo', e)
+  })
+
 const app = express()
 
+app.use(morgan('short'))
 app.use(express.json())
 app.use(express.text())
 app.use(express.urlencoded({ extended: false }))
@@ -18,8 +30,7 @@ app.use(
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
-    error: err.error,
-    message: err.message
+    message: err.message || errors[err.status]
   })
 })
 

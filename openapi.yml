@@ -57,9 +57,6 @@ components:
     Error:
       type: object
       properties:
-        error:
-          type: string
-          example: NOT FOUND
         message:
           type: string
           example: The requested link doesn't exist
