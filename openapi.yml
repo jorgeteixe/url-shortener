@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: URL Shortener for jtei.io
+  description: |
+    URL Shortener written in nodejs made by Jorge Teixeira <jorgeteixe11@gmail.com>
+  version: 1.0.0
+servers:
+  - url: https://jtei.io/u/
+    description: Main (production) server.
+  - url: http://localhost/
+    description: Local (development) server.
+paths:
+  /ping:
+    get:
+      x-eov-operation-id: ping
+      x-eov-operation-handler: routes/general
+      description: Returns pong if the app is up and running
+      responses:
+        200:
+          description: The app is up and running
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pong'
+        500: 
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /{id}:
+    get:
+      x-eov-operation-id: redirect
+      x-eov-operation-handler: routes/general
+      description: Redirects to the value associated with this key
+      responses:
+        301:
+          description: Redirects to the final url
+        404: 
+          description: The requested link is does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500: 
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Pong:
+      type: string
+      example: pong
+      description: Did you say ping?
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: NOT FOUND
+        message:
+          type: string
+          example: The requested link doesn't exist
+      description: Something went wrong
