@@ -34,7 +34,7 @@ paths:
       x-eov-operation-handler: routes/general
       description: Redirects to the value associated with this key
       responses:
-        301:
+        302:
           description: Redirects to the final url
         404: 
           description: The requested link is does not exist
