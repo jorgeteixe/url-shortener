@@ -11,7 +11,7 @@ FROM node:16-alpine
 ENV NODE_ENV=production
 
 COPY --from=BUILD ./node_modules ./node_modules
-COPY src .
+COPY . .
 
 
 RUN apk add dumb-init
