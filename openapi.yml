@@ -2,7 +2,8 @@ openapi: 3.0.0
 info:
   title: URL Shortener for jtei.io
   description: |
-    URL Shortener written in Node.js made by Jorge Teixeira <jorgeteixe11@gmail.com>
+    URL Shortener written in Node.js made
+    by Jorge Teixeira <jorgeteixe11@gmail.com>
   version: 1.0.0
 servers:
   - url: https://jtei.io/u/
@@ -27,7 +28,51 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/InternalServerError'
+  /generate:
+    post:
+      x-eov-operation-id: generate
+      x-eov-operation-handler: routes/manage
+      description: |
+        Adds a new URL to the database and assings a random shortCode,
+        that is returned in the body in successfull responses.
+      responses:
+        200:
+          description: T
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        400: 
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        401: 
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        403: 
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        404: 
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500: 
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
   /{id}:
     get:
       x-eov-operation-id: redirect
@@ -41,23 +86,104 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/NotFound'
         500: 
           description: Something went wrong
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      x-eov-operation-id: add
+      x-eov-operation-handler: routes/manage
+      description: |
+        Adds a new URL to the database and assings the id in the
+        path as shortCode, if the shortCode is already in use, returns 400.
+      responses:
+        200:
+          description: T
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+        400: 
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        401: 
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        403: 
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        404: 
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        500: 
+          description: Something went wrong
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
     Pong:
       type: string
       example: pong
       description: Did you say ping?
-    Error:
+    Resource:
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://jorgeteixeira.es
+        shortCode:
+          type: string
+          example: j29sf
+      description: Url with the shortCode that points to it
+    BadRequest:
       type: object
       properties:
         message:
           type: string
-          example: The requested link doesn't exist
-      description: Something went wrong
+          example: Bad Request
+      description: The request is malformed or some fields are not valid.
+    Unauthorized:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Unauthorized
+      description: You are not authorized in this app
+    Forbidden:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Forbidden
+      description: You don't have the required privileges to do this
+    NotFound:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Not Found
+      description: The resource you're trying to fetch doesn't exist
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Internal Server Error
+      description: Some unexpected error ocurred, contact <jorgeteixe11@gmail.com>
