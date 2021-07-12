@@ -13,11 +13,12 @@ services:
           - mongo
   url-shortener:
     container_name: url-shortener
-    context: ../../
+    build:
+      context: ../../
     restart: always
     environment: 
-      - NODE_ENV: production
-      - MONGO_URI: mongodb://mongo:27017/url-shortener
+      - NODE_ENV='production'
+      - MONGO_URI='mongodb://mongo:27017/url-shortener'
     networks:
       urls:
         aliases:
