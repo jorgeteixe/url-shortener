@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    networks:
+      private:
+        aliases:
+          - mongo
+  mongo-express:
+    image: mongo-express
+    environment:
+        - ME_CONFIG_MONGODB_SERVER=mongo
+        - ME_CONFIG_MONGODB_PORT=27017
+    depends_on:
+        - mongo
+    ports:
+      - 8080:8081
+    networks:
+      private:
+        aliases:
+          - mongo-express
+
+networks:
+  private:

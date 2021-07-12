@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - /mnt/persistent/url-shortener/:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      private:
+        aliases:
+          - mongo
+
+networks:
+  private:

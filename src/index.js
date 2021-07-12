@@ -1,21 +1,21 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const path = require('path')
-const morgan = require('morgan')
+const logger = require('pino')()
+const pino = require('pino-http')()
 const OpenApiValidator = require('express-openapi-validator')
 const errors = require('./errors')
+const config = require('./config')
 
-require('dotenv').config()
-
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect(config.mongo.uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .catch(e => {
-    console.error('Coundn\'t connect to mongo:\n', e)
+    logger.error('Coundn\'t connect to mongo:\n', e)
     process.exit(1)
   })
 
 const app = express()
 
-app.use(morgan('short'))
+app.use(pino)
 app.use(express.json())
 app.use(express.text())
 app.use(express.urlencoded({ extended: false }))
@@ -35,4 +35,4 @@ app.use((err, req, res, next) => {
   })
 })
 
-app.listen(80)
+app.listen(config.server.port)
