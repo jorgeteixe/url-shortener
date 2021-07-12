@@ -2,16 +2,26 @@ version: '3.1'
 
 services:
   mongo:
+    container_name: urls-mongo
     image: mongo
     restart: always
     volumes:
       - /mnt/persistent/url-shortener/:/data/db
-    ports:
-      - 27017:27017
     networks:
-      private:
+      urls:
         aliases:
           - mongo
+  url-shortener:
+    container_name: url-shortener
+    context: ../../
+    restart: always
+    environment: 
+      - NODE_ENV: production
+      - MONGO_URI: mongodb://mongo:27017/url-shortener
+    networks:
+      urls:
+        aliases:
+          - url-shortener
 
 networks:
-  private:
+  urls:
