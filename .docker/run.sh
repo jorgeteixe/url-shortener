@@ -1,3 +1,3 @@
 #!/bin/bash
-./prepare
+./prepare.sh
 docker-compose -f prod/docker-compose.yml up -d
