@@ -19,4 +19,4 @@ RUN apk add dumb-init
 EXPOSE 80
 ENTRYPOINT ["dumb-init", "--"]
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "src/index.js" ]
