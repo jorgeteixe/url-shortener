@@ -160,7 +160,10 @@ components:
         shortCode:
           type: string
           example: j29sf
-      description: Url with the shortCode that points to it
+        cound:
+          type: integer
+          example: 12
+      description: Number of accesses to this url
     BadRequest:
       type: object
       properties:
