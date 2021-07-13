@@ -6,4 +6,4 @@ if [ -z "$1" ]
 fi
 ./prepare.sh
 export URL_SHORTENER_API_KEY=$1
-docker-compose -f prod/docker-compose.yml up -d
+docker-compose -f prod/docker-compose.yml up -d --no-deps --build
