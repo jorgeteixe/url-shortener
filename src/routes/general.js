@@ -4,7 +4,10 @@ const redirect = async (req, res, next) => {
   const { id: shortCode } = req.params
   const r = await Resource.findOne({ shortCode })
   if (r) {
-    return res.redirect(r.url)
+    res.redirect(r.url)
+    r.count++
+    r.save()
+    return
   }
   next({ status: 404, message: 'The requested link doesn\'t exist' })
 }
