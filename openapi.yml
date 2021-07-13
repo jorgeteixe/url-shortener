@@ -38,6 +38,13 @@ paths:
       description: |
         Adds a new URL to the database and assings a random shortCode,
         that is returned in the body in successfull responses.
+      requestBody:
+        description: The url to be added
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
       responses:
         200:
           description: T
@@ -103,6 +110,13 @@ paths:
       description: |
         Adds a new URL to the database and assings the id in the
         path as shortCode, if the shortCode is already in use, returns 400.
+      requestBody:
+        description: The url to be added
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
       responses:
         200:
           description: T
