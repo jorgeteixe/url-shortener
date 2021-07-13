@@ -10,7 +10,7 @@ const resourceSchema = new Schema({
   url: {
     type: String,
     required: true,
-    unique: true
+    unique: false
   },
   count: {
     type: Number,

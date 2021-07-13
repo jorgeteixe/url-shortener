@@ -33,7 +33,8 @@
     "mongoose": "^5.13.0",
     "morgan": "^1.10.0",
     "pino": "^6.12.0",
-    "pino-http": "^5.5.0"
+    "pino-http": "^5.5.0",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "mocha": "^9.0.1",
