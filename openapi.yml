@@ -33,6 +33,8 @@ paths:
     post:
       x-eov-operation-id: generate
       x-eov-operation-handler: routes/manage
+      security:
+        - ApiKeyAuth: []
       description: |
         Adds a new URL to the database and assings a random shortCode,
         that is returned in the body in successfull responses.
@@ -96,6 +98,8 @@ paths:
     post:
       x-eov-operation-id: add
       x-eov-operation-handler: routes/manage
+      security:
+        - ApiKeyAuth: []
       description: |
         Adds a new URL to the database and assings the id in the
         path as shortCode, if the shortCode is already in use, returns 400.
@@ -137,6 +141,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
 components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
   schemas:
     Pong:
       type: string

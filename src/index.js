@@ -25,7 +25,18 @@ app.use(
     apiSpec: path.join(__dirname, '../openapi.yml'),
     validateRequests: true,
     validateResponses: true,
-    operationHandlers: path.join(__dirname)
+    operationHandlers: path.join(__dirname),
+    validateSecurity: {
+      handlers: {
+        ApiKeyAuth: (req, scopes, schema) => {
+          if (config.apiKey !== req.header('x-api-key')) {
+            // eslint-disable-next-line no-throw-literal
+            throw { status: 401, message: 'Incorrect API-Key' }
+          }
+          return true
+        }
+      }
+    }
   })
 )
 

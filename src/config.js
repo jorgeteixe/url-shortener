@@ -2,7 +2,8 @@ require('dotenv').config()
 
 const required = [
   'NODE_ENV',
-  'MONGO_URI'
+  'MONGO_URI',
+  'API_KEY'
 ]
 
 required.forEach((name) => {
@@ -13,6 +14,7 @@ required.forEach((name) => {
 
 const config = {
   env: process.env.NODE_ENV,
+  apiKey: process.env.API_KEY,
   server: {
     port: Number(process.env.PORT) || 80
   },

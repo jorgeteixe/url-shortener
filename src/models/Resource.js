@@ -11,6 +11,13 @@ const resourceSchema = new Schema({
     type: String,
     required: true,
     unique: true
+  },
+  count: {
+    type: Number,
+    required: true,
+    get: v => Math.round(v),
+    set: v => Math.round(v),
+    default: 0
   }
 }, { timestamps: true })
 
