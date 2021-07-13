@@ -19,6 +19,7 @@ services:
     environment: 
       - NODE_ENV='production'
       - MONGO_URI='mongodb://mongo:27017/url-shortener'
+      - API_KEY=${URL_SHORTENER_API_KEY}
     networks:
       urls:
         aliases:
