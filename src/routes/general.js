@@ -13,6 +13,7 @@ const redirect = async (req, res, next) => {
 }
 
 module.exports = {
+  main: (req, res) => res.status(200).send('Welcome to the URL Shortener'),
   ping: (req, res) => res.status(200).send('pong'),
   redirect
 }
